@@ -9,6 +9,4 @@ function CountChar(strParam, charParam)
 }
 
 
-
-
 console.log(CountChar('asdafsdasdsdtBcsdecfdsortBujsyujtidfrByociBBtysdhti', 'F'));
