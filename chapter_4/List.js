@@ -7,9 +7,9 @@ class Element {
 
 function ArrayToList(arrayParam) {
   let headOfList = null;
-
-  for (let value of arrayParam) {
-    let currentItem = new Element(value, headOfList);
+  let count = arrayParam.length;
+  for (let i = 0; i < count; i++) {
+    let currentItem = new Element(arrayParam.pop(), headOfList);
     headOfList = currentItem;
   }
   return headOfList;
