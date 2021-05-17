@@ -15,7 +15,22 @@ function ArrayToList(arrayParam) {
   return headOfList;
 }
 
-let result = ArrayToList([1, 2, 3, 4, 5]);
-console.log(JSON.stringify(result));
-console.log(result);
+function ListToArray(listParam) {
+  let resultArray = Array();
+
+  while (listParam != null) {
+    resultArray.push(listParam.value);
+    listParam = listParam.ref;
+  }
+
+  return resultArray;
+}
+
+let resultList = ArrayToList([1, 2, 3, 4, 5]);
+// console.log(JSON.stringify(result));
+// console.log(result);
+
+let resultArray = ListToArray(resultList);
+console.log("resultArray: " + resultArray);
+
 console.log("done");
