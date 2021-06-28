@@ -36,3 +36,40 @@ function buildGraph(edges) {
 }
 
 const roadGraph = buildGraph(roads);
+
+class VillageState {
+    constructor(place , parcels) {
+        this.place = place;
+        this.parcels = parcels;
+    }
+
+    move(destination) {
+        if(!roadGraph[this.destination].includes(destination)) {
+            return this;
+        }
+        else {
+            let parcels = this.parcels.map(
+                p => {
+                    if(p.place != this.place) return p;
+                    return {place: destination, address: p.address}
+                }
+            ).filter(p =>  p.place != p.address);
+            
+            return new VillageState(destination, parcels);
+        }            
+    }
+}
+
+function runRobot (state, robot, memory) {
+    for(let turn = 0;; turn++) {
+        if(state.parcels.parcels == 0) {
+            console.log(`Выполнено за ${turn} шагов`);
+            break;
+        }
+
+        let action = robot(state, memory);
+        state = state.move(action.direction);
+        memory = action.memory;
+        console.log(`Переход в  направлении ${action.direction}`);
+    }    
+}
