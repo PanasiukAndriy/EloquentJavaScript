@@ -60,7 +60,7 @@ class VillageState {
 
 function runRobot(state, robot, memory) {
   for (let turn = 0; ; turn++) {
-    if (state.parcels.parcels == 0) {
+    if (state.parcels.length == 0) {
       console.log(`Выполнено за ${turn} шагов`);
       break;
     }
@@ -68,6 +68,7 @@ function runRobot(state, robot, memory) {
     let action = robot(state, memory);
     state = state.move(action.direction);
     memory = action.memory;
+
     console.log(`Переход в  направлении ${action.direction}`);
   }
 }
@@ -92,7 +93,31 @@ VillageState.random = function (parcelCount = 5) {
 
     parcels.push({ place, address });
   }
+
   return new VillageState("Почта", parcels);
 };
 
-runRobot(VillageState.random(), randomRobot);
+const mailRoute = [
+  "Дом Алисы",
+  "Склад",
+  "Дом Алисы",
+  "Дом Боба",
+  "Ратуша",
+  "Дом Дарии",
+  "Дом Эрни",
+  "Дом Греты",
+  "Магазин",
+  "Дом Греты",
+  "Ферма",
+  "Рынок",
+  "Почта",
+];
+
+function routeRobot(state, memory) {
+  if (memory.length == 0) {
+    memory = mailRoute;
+  }
+  return { direction: memory[0], memory: memory.slice(1) };
+}
+
+runRobot(VillageState.random(), routeRobot, mailRoute);
